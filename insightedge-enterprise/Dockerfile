@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/rhel7/rhel
 
 LABEL name="insightedge-enterprise-rhel-v14-0"
 LABEL vendor="GigaSpaces Technologies Inc"
-LABEL version="14.0.1"
+LABEL version="14.0.0"
 LABEL release="v2"
 LABEL summary="Real-Time Analytics Platform"
 LABEL description="The InsightEdge Platform is a first-class integration between Apache Spark and the XAP data grid. This integration co-locates Spark jobs with the data they need to access, providing ultra-low latency and high-throughput transaction and stream processing. InsightEdge simplifies and streamlines business optimization, enabling real-time decision support and automated intelligence through unifying fast-data analytics, AI and real-time applications."
@@ -17,6 +17,7 @@ ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b$
 ARG GS_URL=https://gigaspaces-releases-eu.s3.amazonaws.com/${GS_PRODUCT}/${GS_VERSION}/${GS_NAME}.zip
 
 ENV GS_HOME /opt/gigaspaces
+ENV JAVA_HOME /usr/java
 WORKDIR ${GS_HOME}
 
 # the terms_and_conditions.txt is requested by Red Hat
@@ -34,6 +35,14 @@ RUN wget --progress=bar:force -O /tmp/gigaspaces.zip ${GS_URL} &&\
     mkdir -p ${GS_HOME} &&\
     mv /tmp/${GS_NAME}/* ${GS_HOME}/ &&\
     rm -f /tmp/gigaspaces.zip
+
+# Download $JAVA and untar to $JAVA_HOME
+RUN wget --progress=bar:force -O /tmp/java.tar.gz https://download.java.net/java/ga/jdk11/openjdk-11_linux-x64_bin.tar.gz &&\
+    tar xC /tmp -f /tmp/java.tar.gz &&\
+    mkdir -p ${JAVA_HOME} &&\
+    mv /tmp/jdk-11 ${JAVA_HOME}/ &&\
+    rm -f /tmp/java.tar.gz
+
 
 # Configure and expose ports
 ENV XAP_NIC_ADDRESS "#eth0:ip#"
