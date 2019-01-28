@@ -2,17 +2,17 @@ FROM registry.access.redhat.com/rhel7/rhel
 
 LABEL name="insightedge-enterprise-rhel-v14-0"
 LABEL vendor="GigaSpaces Technologies Inc"
-LABEL version="14.0.0"
+LABEL version="14.0.1"
 LABEL release="v2"
 LABEL summary="Real-Time Analytics Platform"
 LABEL description="The InsightEdge Platform is a first-class integration between Apache Spark and the XAP data grid. This integration co-locates Spark jobs with the data they need to access, providing ultra-low latency and high-throughput transaction and stream processing. InsightEdge simplifies and streamlines business optimization, enabling real-time decision support and automated intelligence through unifying fast-data analytics, AI and real-time applications."
 
-ARG RH_user=yaelk@gigaspaces.com
-ARG RH_password=pashpo36
+ARG RH_user="redhat user"
+ARG RH_password="redhat password"
 ARG GS_PRODUCT=insightedge
-ARG GS_VERSION=14.0.0
+ARG GS_VERSION=14.0.1
 ARG GS_MILESTONE=ga
-ARG GS_BUILD=20000
+ARG GS_BUILD=20100
 ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b${GS_BUILD}
 ARG GS_URL=https://gigaspaces-releases-eu.s3.amazonaws.com/${GS_PRODUCT}/${GS_VERSION}/${GS_NAME}.zip
 
