@@ -7,12 +7,12 @@ LABEL release="v1"
 LABEL summary="In-Memory Data Grid"
 LABEL description="XAP is the core in-memory data grid for the InsightEdge Platform. XAP is designed to support ultra-low latency and high-throughput applications that follow Space-Based Architecture design patterns. XAP is based on GigaSpaces' Spring-based OpenSpaces Framework as the primary development environment, and uses the GigaSpaces space-based runtime to deliver core middleware facilities: messaging, data caching and parallelization."
 
-ARG RH_user=yaelk@gigaspaces.com
-ARG RH_password=pashpo36
+ARG RH_user="redhat user"
+ARG RH_password="redhat password"
 ARG GS_PRODUCT=xap
 ARG GS_VERSION=14.0.1
 ARG GS_MILESTONE=ga
-ARG GS_BUILD=20000
+ARG GS_BUILD=20100
 ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b${GS_BUILD}
 ARG GS_URL=https://gigaspaces-releases-eu.s3.amazonaws.com/${GS_PRODUCT}/${GS_VERSION}/${GS_NAME}.zip
 ENV GS_HOME /opt/gigaspaces
