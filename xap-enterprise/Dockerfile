@@ -16,6 +16,7 @@ ARG GS_BUILD=20000
 ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b${GS_BUILD}
 ARG GS_URL=https://gigaspaces-releases-eu.s3.amazonaws.com/${GS_PRODUCT}/${GS_VERSION}/${GS_NAME}.zip
 ENV GS_HOME /opt/gigaspaces
+ENV JAVA_HOME /usr/java
 WORKDIR ${GS_HOME}
 
 # the terms_and_conditions.txt is requested by Red Hat
@@ -34,6 +35,14 @@ RUN wget --progress=bar:force -O /tmp/gigaspaces.zip ${GS_URL} &&\
     mv /tmp/${GS_NAME}/* ${GS_HOME}/ &&\
     rm -f /tmp/gigaspaces.zip
 ADD entrypoint.sh /opt/entrypoint.sh
+
+# Download $JAVA and untar to $JAVA_HOME
+RUN wget --progress=bar:force -O /tmp/java.tar.gz https://download.java.net/java/ga/jdk11/openjdk-11_linux-x64_bin.tar.gz &&\
+    tar xC /tmp -f /tmp/java.tar.gz &&\
+    mkdir -p ${JAVA_HOME} &&\
+    mv /tmp/jdk-11 ${JAVA_HOME}/ &&\
+    rm -f /tmp/java.tar.gz
+
 # Configure and expose ports
 ENV XAP_NIC_ADDRESS "#eth0:ip#"
 ENV XAP_LOOKUP_PORT 4174
