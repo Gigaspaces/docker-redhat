@@ -1,0 +1,2 @@
+The InsightEdge Enterprise image requires a license key to run, which can be provided using the XAP_LICENSE environment variable. You can use the tryme license, which enables you to use the full InsightEdge product for 24 hours (and then terminates the image), or you can get a longer evaluation license.
+For more information please check here: https://hub.docker.com/r/gigaspaces/insightedge-enterprise/
