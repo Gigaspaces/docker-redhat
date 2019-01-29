@@ -37,10 +37,10 @@ RUN wget --progress=bar:force -O /tmp/gigaspaces.zip ${GS_URL} &&\
     rm -f /tmp/gigaspaces.zip
 
 # Download $JAVA and untar to $JAVA_HOME
-RUN wget --progress=bar:force -O /tmp/java.tar.gz https://download.java.net/java/ga/jdk11/openjdk-11_linux-x64_bin.tar.gz &&\
+RUN wget --progress=bar:force -O /tmp/java.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz &&\
     tar xC /tmp -f /tmp/java.tar.gz &&\
     mkdir -p ${JAVA_HOME} &&\
-    mv /tmp/jdk-11 ${JAVA_HOME}/ &&\
+    mv /tmp/jdk-11.0.2/* ${JAVA_HOME}/ &&\
     rm -f /tmp/java.tar.gz
 
 
