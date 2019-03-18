@@ -13,3 +13,25 @@ GigaSpaces provides Docker images for the following products:
 - InsightEdge open source edition, which uses IEP Open Source to supercharge your Spark workloads.
 
 - InsightEdge Enterprise edition, which offers all the above plus high availability (up to 5 nines) with auto-healing, disaster recovery via geo-redundancy, fast data replication and native persistence.
+
+How to upload new Insightedge Enterprise/ XAP Enterprise Dockers to RedHat 
+
+1. Start docker on your machine
+2. Clone docker-redhat project: git clone https://github.com/Gigaspaces/docker-redhat.git
+3. Navigate to Docker Build: 
+	IE:cd docker-redhat/insightedge-enterprise/
+	XAP: cd docker-redhat/xap-enterprise/
+4. Edit Dockerfile and replace:
+	ARG RH_user="redhat user”
+	ARG RH_password="redhat password"
+with:
+	ARG RH_user="GigaSpacesTech”
+	ARG RH_password="7Empire!”
+
+5. Build the docker: docker build -t gigaspaces/<your InsightEdge Docker Image name> .
+6. Upload the docker to RedHat: 
+	* Go to this page:
+	 IE: https://connect.redhat.com/project/969331/view  
+	 XAP:https://connect.redhat.com/project/986421/view 
+	* Click on “Upload Your Image”
+	* Follow the instructions.
