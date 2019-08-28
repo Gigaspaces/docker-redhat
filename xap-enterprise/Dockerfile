@@ -24,7 +24,7 @@ RUN mkdir -p /licenses
 COPY terms_and_conditions.txt /licenses
 
 # Install wget and unzip
-RUN subscription-manager register --force --username ${RH_user} --password ${RH_password} --auto-attach
+# RUN subscription-manager register --force --username ${RH_user} --password ${RH_password} --auto-attach
 RUN yum install wget --assumeyes
 RUN yum install unzip --assumeyes
 
