@@ -29,5 +29,5 @@ fi
 
 # Execute the container CMD under tini for better hygiene
 echo "Executing command: ${CMD[@]}" 1>&2
-#exec /sbin/tini -s -- "${CMD[@]}"
+# exec /sbin/tini -s -- "${CMD[@]}"
 exec /bin/sh "${CMD[@]}"

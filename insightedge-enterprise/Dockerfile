@@ -1,8 +1,8 @@
 FROM registry.access.redhat.com/rhel7/rhel
 
-LABEL name="insightedge-enterprise-rhel-v14-0"
+LABEL name="insightedge-enterprise-rhel-v15-0"
 LABEL vendor="GigaSpaces Technologies Inc"
-LABEL version="14.0.1"
+LABEL version="15.0.0"
 LABEL release="v2"
 LABEL summary="Real-Time Analytics Platform"
 LABEL description="The InsightEdge Platform is a first-class integration between Apache Spark and the XAP data grid. This integration co-locates Spark jobs with the data they need to access, providing ultra-low latency and high-throughput transaction and stream processing. InsightEdge simplifies and streamlines business optimization, enabling real-time decision support and automated intelligence through unifying fast-data analytics, AI and real-time applications."
@@ -10,15 +10,17 @@ LABEL description="The InsightEdge Platform is a first-class integration between
 ARG RH_user="redhat user"
 ARG RH_password="redhat password"
 ARG GS_PRODUCT=insightedge
-ARG GS_VERSION=14.0.1
+ARG GS_VERSION=15.0.0
 ARG GS_MILESTONE=ga
 ARG GS_BUILD=20100
-ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b${GS_BUILD}
+#ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}-${GS_MILESTONE}-b${GS_BUILD}
+ARG GS_NAME=gigaspaces-${GS_PRODUCT}-enterprise-${GS_VERSION}
 ARG GS_URL=https://gigaspaces-releases-eu.s3.amazonaws.com/${GS_PRODUCT}/${GS_VERSION}/${GS_NAME}.zip
-
 ENV GS_HOME /opt/gigaspaces
 ENV JAVA_HOME /usr/java
+ENV PATH "${PATH}:${JAVA_HOME}/bin"
 WORKDIR ${GS_HOME}
+ENV HOME ${GS_HOME}
 
 # the terms_and_conditions.txt is requested by Red Hat
 RUN mkdir -p /licenses
@@ -28,6 +30,7 @@ COPY terms_and_conditions.txt /licenses
 # RUN subscription-manager register --force --username ${RH_user} --password ${RH_password} --auto-attach
 RUN yum install wget --assumeyes
 RUN yum install unzip --assumeyes
+
 
 # Download $GS_URL and unzip to $GS_HOME
 RUN wget --progress=bar:force -O /tmp/gigaspaces.zip ${GS_URL} &&\
@@ -43,8 +46,16 @@ RUN wget --progress=bar:force -O /tmp/java.tar.gz https://download.java.net/java
     mv /tmp/jdk-11.0.2/* ${JAVA_HOME}/ &&\
     rm -f /tmp/java.tar.gz
 
+RUN if test -f ${GS_HOME}/tools/kubernetes/client/pom.xml;then\
+    wget https://www-eu.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz &&\
+    tar xvf apache-maven-3.6.3-bin.tar.gz &&\
+    ./apache-maven-3.6.3/bin/mvn package clean --file=${GS_HOME}/tools/kubernetes/client/pom.xml &&\
+    rm -Rf apache-maven-3.6.3 &&\
+    rm apache-maven-3.6.3-bin.tar.gz;\
+    fi
 
 # Configure and expose ports
+ENV LD_LIBRARY_PATH "/lib:/lib64"
 ENV XAP_NIC_ADDRESS "#eth0:ip#"
 ENV XAP_LOOKUP_PORT 4174
 ENV XAP_LRMI_PORT 8200-8300
@@ -65,6 +76,7 @@ ENV EXT_JAVA_OPTIONS "-Dcom.gs.multicast.discoveryPort=${XAP_LOOKUP_PORT} -Dcom.
 
 # Configure Spark directory structure
 ENV SPARK_HOME ${GS_HOME}/insightedge/spark
+ENV SPARK_CONF_DIR "${SPARK_HOME}/conf"
 
 RUN mkdir -p ${SPARK_HOME} && \
     mkdir -p ${SPARK_HOME}/work-dir && \
@@ -84,6 +96,13 @@ ENV INSIGHTEDGE_SPACE_NAME insightedge-space
 ADD docker-entrypoint.sh /opt/docker-entrypoint.sh
 ADD entrypoint.sh /opt/entrypoint.sh
 RUN cp /opt/gigaspaces/insightedge/spark/kubernetes/dockerfiles/spark/entrypoint.sh /opt/spark_entrypoint.sh
+
+# Create gigaspaces user
+RUN chgrp -R 0 ${GS_HOME} && \
+    chmod -R g=u ${GS_HOME}
+RUN chgrp  0 /opt/spark_entrypoint.sh && \
+    chmod  g=u /opt/spark_entrypoint.sh
+
 
 # Configure Docker entrypoint
 ENTRYPOINT [ "/opt/docker-entrypoint.sh" ]
