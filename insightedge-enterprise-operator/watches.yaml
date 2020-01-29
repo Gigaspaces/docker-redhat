@@ -1,0 +1,9 @@
+---
+- version: v1alpha1
+  group: insightedge.gigaspaces.com
+  kind: Insightedge
+  chart: /opt/helm/helm-charts/insightedge
+  overideValues:
+    pu.image.repository: $RELATED_IMAGE_INSIGHTEDGE
+    manager.image.repository: $RELATED_IMAGE_INSIGHTEDGE
+    zeppelin.image.repository: $RELATED_IMAGE_INSIGHTEDGE

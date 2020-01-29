@@ -1,0 +1,14 @@
+dependencies:
+  - name: insightedge-manager
+    version: "15.0"
+    repository: file:///Users/yoramweinreb/work/openshift/insightedge-enterprise-operator/helm_charts/insightedge/charts/insightedge-manager
+    alias: manager
+  - name: insightedge-pu
+    version: "15.0"
+    repository: file:///Users/yoramweinreb/work/openshift/insightedge-enterprise-operator/helm_charts/charts/insightedge-pu
+    alias: pu
+  - name: insightedge-zeppelin
+    version: "15.0"
+    repository: file:///Users/yoramweinreb/work/openshift/insightedge-enterprise-operator/helm_charts/charts/insightedge-zeppelin
+    alias: zeppelin
+

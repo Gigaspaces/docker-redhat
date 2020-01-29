@@ -1,0 +1,17 @@
+# Default values for xap-zeppelin.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: registry.connect.redhat.com/gigaspaces/insightedge:V15
+  pullPolicy: IfNotPresent #Always
+
+nameOverride: insightedge-zeppelin
+
+service:
+  # type: Service type.
+  type: LoadBalancer
+  # api: REST Manager API port.
+  api:
+    port: 9090
+    nodePort:

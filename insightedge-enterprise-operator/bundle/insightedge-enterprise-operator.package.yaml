@@ -1,0 +1,4 @@
+channels:
+- currentCSV: insightedge-enterprise-operator.v0.0.4
+  name: alpha
+packageName: insightedge-enterprise-operator

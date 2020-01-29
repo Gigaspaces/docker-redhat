@@ -1,0 +1,21 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "insightedge-zeppelin.fullname" . }}-service
+  labels:
+    app: {{ template "insightedge-zeppelin.name" . }}
+    chart: {{ template "insightedge-zeppelin.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: zeppelin
+      protocol: TCP
+      port: {{ .Values.service.api.port }}
+      {{if (.Values.service.api.nodePort)}}
+      nodePort: {{ .Values.service.api.nodePort }}
+      {{ end }}
+  selector:
+    selectorId: {{ template "insightedge-zeppelin.fullname" . }}

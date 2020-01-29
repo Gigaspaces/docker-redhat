@@ -1,0 +1,326 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: |-
+      [
+        {
+          "apiVersion": "insightedge.gigaspaces.com/v1alpha1",
+          "kind": "Edge",
+          "metadata": {
+            "name": "example-insightedge"
+          },
+          "spec": {
+            "manager": {
+              "antiAffinity": {
+                "enabled": false
+              },
+              "ha": false,
+              "hs": {
+                "lus": 4174,
+                "zkClient": 2181,
+                "zkLeaderElection": 3888,
+                "zkServer": 2888
+              },
+              "image": {
+                "pullPolicy": "IfNotPresent",
+                "repository": "repo path",
+              },
+              "java": {
+                "heap": "limit-150Mi",
+                "options": null
+              },
+              "nameOverride": "insightedge-manager",
+              "resources": {
+                "limits": {
+                  "memory": "300Mi"
+                }
+              },
+              "service": {
+                "api": {
+                  "enabled": true,
+                  "nodePort": null,
+                  "port": 8090
+                },
+                "lrmi": {
+                  "enabled": true,
+                  "nodePort": null,
+                  "port": 8200
+                },
+                "lus": {
+                  "enabled": true,
+                  "nodePort": null,
+                  "port": 4174
+                },
+                "type": "LoadBalancer"
+              },
+              "terminationGracePeriodSeconds": 30
+            },
+            "pu": {
+              "antiAffinity": {
+                "enabled": false
+              },
+              "ha": null,
+              "image": {
+                "pullPolicy": "IfNotPresent",
+                "repository": "repo path",
+              },
+              "instances": null,
+              "java": {
+                "heap": "limit-150Mi",
+                "options": null
+              },
+              "license": "tryme",
+              "livenessProbe": {
+                "enabled": false,
+                "failureThreshold": 3,
+                "initialDelaySeconds": 30,
+                "periodSeconds": 5
+              },
+              "manager": {
+                "discoveryTimeoutSeconds": 60,
+                "name": null,
+                "ports": {
+                  "api": 8090
+                }
+              },
+              "memoryXtendVolume": {
+                "enabled": false,
+                "volumeClaimTemplate": {
+                  "accessModes": "ReadWriteOnce",
+                  "persistentVolumeReclaimPolicy": "Delete",
+                  "storage": null,
+                  "storageClassName": null
+                },
+                "volumeMount": {
+                  "mountPath": "/opt/gigaspaces/work/memoryxtend",
+                  "name": "mx-volume"
+                }
+              },
+              "nameOverride": "insightedge-pu",
+              "partitions": null,
+              "properties": null,
+              "readinessProbe": {
+                "enabled": false,
+                "failureThreshold": 3,
+                "initialDelaySeconds": 30,
+                "periodSeconds": 5
+              },
+              "resourceUrl": null,
+              "resources": {
+                "limits": {
+                  "memory": "400Mi"
+                }
+              },
+              "schema": null,
+              "service": {
+                "lrmi": {
+                  "enabled": false,
+                  "initialNodePort": null,
+                  "port": 8200
+                },
+                "type": "LoadBalancer"
+              },
+              "terminationGracePeriodSeconds": 30
+            },
+            "zeppelin": {
+              "image": {
+                "pullPolicy": "IfNotPresent",
+                "repository": "repo path",
+              },
+              "nameOverride": "insightedge-zeppelin",
+              "service": {
+                "api": {
+                  "nodePort": null,
+                  "port": 9090
+                },
+                "type": "LoadBalancer"
+              }
+            }
+          }
+        }
+      ]
+    capabilities: Basic Install
+    categories: AI/Machine Learning, Big Data, Database, Streaming & Messaging
+    containerImage: "quay.io/yoramw/insightedge-enterprise-operator:v0.0.3"
+    createdAt: 2020-08-08 14:59:59 +00:00
+    certified: "true"
+    support: Gigaspaces Ltd
+    description: >
+        InsightEdge is an in-memory real-time analytics platform for instant insights to action.
+        It's an always-on platform for mission-critical applications across cloud, on-premise or hybrid.
+        InsightEdge operationalizes machine learning and transactional processing, at scale;
+        analyzing data as it's born, enriching it with historical context, for instant insights.
+
+  name: insightedge-enterprise-operator.v0.0.3
+  namespace: gigaspaces
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - kind: Insightedge
+      name: insightedges.insightedge.gigaspaces.com
+      version: v1alpha1
+  description: |
+    InsightEdge is an in-memory real-time analytics platform for instant insights to action. It's an always-on platform for mission-critical applications across cloud, on-premise or hybrid. InsightEdge operationalizes machine learning and transactional processing, at scale; analyzing data as it's born, enriching it with historical context, for instant insights.
+  displayName: Insightedge Enterprise Operator
+
+  maintainers:
+    - email: support@gigaspaces.com
+      name: GigaSpaces Technologies Ltd.
+  links:
+    - name: Blog
+      url: https://www.gigaspaces.com/blog/
+    - name: Documentation
+      url: https://docs.gigaspaces.com/
+  icon:
+    - base64data: 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
+      mediatype: image/png
+  install:
+    spec:
+      deployments:
+      - name: insightedge-enterprise-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: insightedge-enterprise-operator
+          strategy: {}
+          template:
+            metadata:
+              labels:
+                name: insightedge-enterprise-operator
+            spec:
+              containers:
+              - env:
+                - name: WATCH_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: OPERATOR_NAME
+                  value: insightedge-enterprise-operator
+                - name: RELATED_IMAGE_INSIGHTEDGE
+                  value: quay.io/yoramw/insightedge-enterprise:v15
+                image: quay.io/yoramw/insightedge-enterprise-operator:v0.0.3
+                imagePullPolicy: Always
+                name: insightedge-enterprise-operator
+                resources: {}
+              serviceAccountName: insightedge-enterprise-operator
+      permissions:
+      - rules:
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          - roles
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - servicemonitors
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - apps
+          resourceNames:
+          - insightedge-enterprise-operator
+          resources:
+          - deployments/finalizers
+          verbs:
+          - update
+        - apiGroups:
+          - ""
+          resources:
+          - pods
+          verbs:
+          - get
+        - apiGroups:
+          - apps
+          resources:
+          - replicasets
+          - deployments
+          verbs:
+          - get
+        - apiGroups:
+          - insightedge.gigaspaces.com
+          resources:
+          - '*'
+          verbs:
+          - '*'
+        serviceAccountName: insightedge-enterprise-operator
+      clusterPermissions:
+      - rules:
+        - apiGroups: 
+          - rbac.authorization.k8s.io
+          resources:
+          -  clusterroles
+          - clusterrolebindings
+          verbs:
+          - get
+          - create
+        - apiGroups:
+          - ""
+          resources:
+          - nodes
+          verbs:
+          - get
+          - list
+        serviceAccountName: insightedge-enterprise-operator
+    strategy: deployment
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: false
+    type: AllNamespaces
+  keywords:
+  - database
+  - sql
+  - Real-time analytics
+  - Real-time ML,
+  - In-memory Computing
+  - In-memory Computing platform
+  - High performance computing
+  - Big Data analytics
+  - Accelerate data lakes
+  - Kubernetes
+  - Microservices
+  - event-driven analytics
+  maturity: alpha
+  provider: 
+    name: Gigaspaces
+  version: 0.0.3

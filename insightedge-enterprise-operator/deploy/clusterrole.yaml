@@ -1,0 +1,20 @@
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: insightedge-enterprise-operator
+rules:
+- apiGroups: 
+  - rbac.authorization.k8s.io
+  resources:
+  -  clusterroles
+  - clusterrolebindings
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
