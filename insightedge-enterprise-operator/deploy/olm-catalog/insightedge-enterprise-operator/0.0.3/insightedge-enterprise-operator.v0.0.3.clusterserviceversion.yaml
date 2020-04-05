@@ -22,10 +22,6 @@ metadata:
                 "zkLeaderElection": 3888,
                 "zkServer": 2888
               },
-              "image": {
-                "pullPolicy": "IfNotPresent",
-                "repository": "repo path",
-              },
               "java": {
                 "heap": "limit-150Mi",
                 "options": null
