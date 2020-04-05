@@ -22,10 +22,6 @@ metadata:
                 "zkLeaderElection": 3888,
                 "zkServer": 2888
               },
-              "image": {
-                "pullPolicy": "IfNotPresent",
-                "repository": "registry.connect.redhat.com/gigaspaces/insightedge:V15"
-              },
               "java": {
                 "heap": "limit-150Mi",
                 "options": null
