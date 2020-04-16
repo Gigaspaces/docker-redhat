@@ -10,6 +10,7 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   replicas: 1
+  serviceName: {{ template "insightedge-zeppelin.fullname" . }}-service
   selector:
     matchLabels:
       selectorId: {{ template "insightedge-zeppelin.fullname" . }}

@@ -88,6 +88,7 @@ metadata:
 #statefulset spec
 spec:
   replicas: {{$replicaCount}}
+  serviceName: {{ template "insightedge-pu.fullname" $ }}{{$podSuffix}}-0-service
   selector:
     matchLabels:
       selectorId: {{ template "insightedge-pu.fullname" $ }}{{$podSuffix}}
