@@ -54,7 +54,7 @@ manager:
     # heap: Configure the size of the on-heap memory for each Platform Manager instance.
     heap: limit-150Mi
     # options: Configure additional Java options for each Platform Manager instance.
-    options:
+    options: -Duser.home=/opt/gigaspaces
   # resources: Configure the Platform Manager resources.
   resources:
     # Best practice is do not specify default resources, so the user can configure them independently.
@@ -159,7 +159,7 @@ pu:
     # heap: Define the size of the on-heap memory for each processing unit instance as either a percentage or an absolute value.
     heap: limit-150Mi
     # options: Configure additional Java options for each processing unit instance.
-    options:
+    options: -Duser.home=/opt/gigaspaces
   # resources: Configure the processing unit instance resources.
   resources:
     # Best practice is do not specify default resources, so the user can configure independently.
